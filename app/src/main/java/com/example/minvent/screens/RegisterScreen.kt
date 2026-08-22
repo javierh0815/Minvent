@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -24,7 +24,7 @@ fun LoginScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "MINVENT",
+            text = "REGISTRO",
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 32.dp)
         )
@@ -55,30 +55,26 @@ fun LoginScreen(navController: NavController) {
             onClick = { /* pendiente... */ },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Entrar")
+            Text("Registrarse")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("register") },
+            onClick = { navController.navigate("login") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Ir a Registro")
+            Text("Ir a Inicio de Sesión")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = { navController.navigate("recover") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Recupera tu contraseña")
-        }
+
 
 
 
 
 
     }
+
+
 }
