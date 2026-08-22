@@ -25,7 +25,14 @@ fun RecoverPassScreen(navController: NavController){
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Correo electrónico") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = { /* pendiente... */ },
@@ -33,14 +40,32 @@ fun RecoverPassScreen(navController: NavController){
         ) {
             Text("Enviar petición")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("login") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Ir a Inicio de Sesión")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("register") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Ir a Registro")
+        }
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
 
 
 

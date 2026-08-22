@@ -57,6 +57,23 @@ fun RegisterScreen(navController: NavController){
         ) {
             Text("Registrarse")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("login") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Ir a Inicio de Sesión")
+        }
+
+
+
+
+
+
+
+
     }
 
 

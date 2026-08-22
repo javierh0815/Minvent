@@ -66,5 +66,19 @@ fun LoginScreen(navController: NavController) {
         ) {
             Text("Ir a Registro")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("recover") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Recupera tu contraseña")
+        }
+
+
+
+
+
     }
 }
