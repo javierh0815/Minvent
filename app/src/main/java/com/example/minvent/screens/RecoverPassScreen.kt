@@ -7,18 +7,54 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import com.example.minvent.data.DataUsers
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecoverPassScreen(navController: NavController){
     var email by remember { mutableStateOf("") }
+    var errorMensaje by remember { mutableStateOf("") }
+    var successMensaje by remember { mutableStateOf("") }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Volver atrás"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate("login") {
+                            popUpTo("login") { inclusive = true }
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "Volver al inicio"
+                        )
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(innerPadding)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text(
             text = "Recuperar contraseña",
             style = MaterialTheme.typography.headlineLarge,
@@ -35,7 +71,24 @@ fun RecoverPassScreen(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /* pendiente... */ },
+            onClick = {
+                val userEncontrado = DataUsers.dummyData.any {
+                    it.email.equals(email, ignoreCase = true)
+                }
+
+                if (email.isBlank()) {
+                    errorMensaje = "Ingresar correo electrónico"
+                    successMensaje = ""
+                } else if (!userEncontrado){
+                    errorMensaje = "No se encuentra al usuario"
+                    successMensaje = ""
+                } else {
+                    errorMensaje = ""
+                    successMensaje = "Se ha enviado un correo para recuperar contraseña"
+                }
+
+
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Enviar petición")
@@ -59,6 +112,19 @@ fun RecoverPassScreen(navController: NavController){
             Text("Ir a Registro")
         }
 
+        if (errorMensaje.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = errorMensaje, color = MaterialTheme.colorScheme.error)
+        }
+        if (successMensaje.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = successMensaje, color = MaterialTheme.colorScheme.primary)
+        }
+
+
+
+
+    }
 
 
 

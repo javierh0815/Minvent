@@ -10,11 +10,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.minvent.data.DataUsers
 
 @Composable
 fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMensaje by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -52,7 +54,20 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* pendiente... */ },
+            onClick = {
+                val userExiste = DataUsers.dummyData.any{
+                    it.email.equals(email, ignoreCase = true)
+                }
+
+                if (email.isBlank() || password.isBlank()) {
+                    errorMensaje = "Ingrese los campos para continuar"
+                } else if (!userExiste) {
+                    errorMensaje = "El usuario no existe"
+                } else {
+                    errorMensaje = ""
+                    /* ruta pendiente */
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Entrar")
@@ -76,9 +91,14 @@ fun LoginScreen(navController: NavController) {
             Text("Recupera tu contraseña")
         }
 
-
-
-
+        if (errorMensaje.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = errorMensaje,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
 
     }
 }
