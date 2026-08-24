@@ -44,96 +44,81 @@ fun RecoverPassScreen(navController: NavController){
                     }
                 }
             )
-        }
+        },
+
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Recuperar contraseña",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = {
-                val userEncontrado = DataUsers.dummyData.any {
-                    it.email.equals(email, ignoreCase = true)
-                }
-
-                if (email.isBlank()) {
-                    errorMensaje = "Ingresar correo electrónico"
-                    successMensaje = ""
-                } else if (!userEncontrado){
-                    errorMensaje = "No se encuentra al usuario"
-                    successMensaje = ""
-                } else {
-                    errorMensaje = ""
-                    successMensaje = "Se ha enviado un correo para recuperar contraseña"
-                }
-
-
-            },
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Enviar petición")
+            Text(
+                text = "Recuperar contraseña",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Correo electrónico") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    val userEncontrado = DataUsers.dummyData.any {
+                        it.email.equals(email, ignoreCase = true)
+                    }
+
+                    if (email.isBlank()) {
+                        errorMensaje = "Ingresar correo electrónico"
+                        successMensaje = ""
+                    } else if (!userEncontrado){
+                        errorMensaje = "No se encuentra al usuario"
+                        successMensaje = ""
+                    } else {
+                        errorMensaje = ""
+                        successMensaje = "Se ha enviado un correo para recuperar contraseña"
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Enviar petición")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { navController.navigate("login") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Ir a Inicio de Sesión")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { navController.navigate("register") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Ir a Registro")
+            }
+
+            if (errorMensaje.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = errorMensaje, color = MaterialTheme.colorScheme.error)
+            }
+            if (successMensaje.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = successMensaje, color = MaterialTheme.colorScheme.primary)
+            }
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.navigate("login") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Ir a Inicio de Sesión")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.navigate("register") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Ir a Registro")
-        }
-
-        if (errorMensaje.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = errorMensaje, color = MaterialTheme.colorScheme.error)
-        }
-        if (successMensaje.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = successMensaje, color = MaterialTheme.colorScheme.primary)
-        }
-
-
-
-
     }
-
-
-
-
-
-
-    }
-
-
-
-
 }

@@ -6,99 +6,129 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.minvent.data.DataUsers
+import com.example.minvent.utils.playSuccessFeedback
 
 @Composable
 fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMensaje by remember { mutableStateOf("") }
+    var bienvenidaDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        Text(
-            text = "MINVENT",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Contraseña") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                val userExiste = DataUsers.dummyData.any{
-                    it.email.equals(email, ignoreCase = true)
-                }
-
-                if (email.isBlank() || password.isBlank()) {
-                    errorMensaje = "Ingrese los campos para continuar"
-                } else if (!userExiste) {
-                    errorMensaje = "El usuario no existe"
-                } else {
-                    errorMensaje = ""
-                    navController.navigate("home")
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Entrar")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.navigate("register") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Ir a Registro")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.navigate("recover") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Recupera tu contraseña")
-        }
-
-        if (errorMensaje.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = errorMensaje,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium
+                text = "MINVENT",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 32.dp)
             )
-        }
 
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Correo electrónico") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Contraseña") },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    val userExiste = DataUsers.dummyData.any{
+                        it.email.equals(email, ignoreCase = true)
+                    }
+
+                    if (email.isBlank() || password.isBlank()) {
+                        errorMensaje = "Ingrese los campos para continuar"
+                    } else if (!userExiste) {
+                        errorMensaje = "El usuario no existe"
+                    } else {
+                        errorMensaje = ""
+                        playSuccessFeedback(context)
+                        bienvenidaDialog = true
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Entrar")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { navController.navigate("register") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Ir a Registro")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { navController.navigate("recover") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Recupera tu contraseña")
+            }
+
+            if (errorMensaje.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = errorMensaje,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+
+            if (bienvenidaDialog) {
+                AlertDialog(
+                    onDismissRequest = { },
+                    title = { Text("¡Bienvenido!") },
+                    text = { Text("Has iniciado sesión correctamente en MINVENT.") },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                bienvenidaDialog = false
+                                navController.navigate("home") {
+                                    popUpTo("login") { inclusive = true }
+                                }
+                            }
+                        ) {
+                            Text("Continuar")
+                        }
+                    }
+                )
+            }
+        }
     }
 }

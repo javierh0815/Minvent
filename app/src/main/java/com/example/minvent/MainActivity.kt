@@ -20,20 +20,23 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = "login") {
-                composable("login") {
-                    LoginScreen(navController)
-                }
-                composable("register"){
-                    RegisterScreen(navController)
-                }
-                composable("recover"){
-                    RecoverPassScreen(navController)
-                }
-                composable("home") {
-                    HomeScreen(navController)
+            MinventTheme {
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = "login") {
+                    composable("login") {
+                        LoginScreen(navController)
+                    }
+                    composable("register"){
+                        RegisterScreen(navController)
+                    }
+                    composable("recover"){
+                        RecoverPassScreen(navController)
+                    }
+                    composable("home") {
+                        HomeScreen(navController)
+                    }
                 }
             }
         }
