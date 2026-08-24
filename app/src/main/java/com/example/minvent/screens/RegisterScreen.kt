@@ -9,11 +9,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.minvent.data.DataUsers
+import com.example.minvent.utils.playSuccessFeedback
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,6 +24,7 @@ fun RegisterScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var showPopup by remember { mutableStateOf(false) }
     var errorMensaje by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -48,7 +51,8 @@ fun RegisterScreen(navController: NavController) {
                     }
                 }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -97,6 +101,7 @@ fun RegisterScreen(navController: NavController) {
                         showPopup = false
                     } else {
                         errorMensaje = ""
+                        playSuccessFeedback(context)
                         showPopup = true
                     }
                 },
@@ -114,7 +119,6 @@ fun RegisterScreen(navController: NavController) {
                 Text("Ir a Inicio de Sesión")
             }
 
-
             if (errorMensaje.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
@@ -123,7 +127,6 @@ fun RegisterScreen(navController: NavController) {
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-
 
             if (showPopup) {
                 AlertDialog(
