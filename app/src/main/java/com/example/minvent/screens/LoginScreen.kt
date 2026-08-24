@@ -65,7 +65,7 @@ fun LoginScreen(navController: NavController) {
                     errorMensaje = "El usuario no existe"
                 } else {
                     errorMensaje = ""
-                    /* ruta pendiente */
+                    navController.navigate("home")
                 }
             },
             modifier = Modifier.fillMaxWidth()

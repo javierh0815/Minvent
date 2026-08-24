@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.minvent.screens.HomeScreen
 import com.example.minvent.screens.LoginScreen
 import com.example.minvent.screens.RecoverPassScreen
 import com.example.minvent.screens.RegisterScreen
@@ -30,6 +31,9 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("recover"){
                     RecoverPassScreen(navController)
+                }
+                composable("home") {
+                    HomeScreen(navController)
                 }
             }
         }
