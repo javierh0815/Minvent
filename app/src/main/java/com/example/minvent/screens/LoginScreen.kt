@@ -20,6 +20,8 @@ fun LoginScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var errorMensaje by remember { mutableStateOf("") }
     var bienvenidaDialog by remember { mutableStateOf(false) }
+    var intentosFallidos by remember { mutableIntStateOf(0) }
+    var mostrarDialogoBloqueo by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     Surface(
@@ -63,15 +65,25 @@ fun LoginScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    val userExiste = DataUsers.dummyData.any{
+                    val usuarioEncontrado = DataUsers.dummyData.find {
                         it.email.equals(email, ignoreCase = true)
                     }
 
                     if (email.isBlank() || password.isBlank()) {
                         errorMensaje = "Ingrese los campos para continuar"
-                    } else if (!userExiste) {
+                    } else if (usuarioEncontrado == null) {
                         errorMensaje = "El usuario no existe"
+                    } else if (usuarioEncontrado.password != password) {
+                        intentosFallidos++
+
+                        if (intentosFallidos >= 3) {
+                            errorMensaje = "Acceso bloqueado temporalmente"
+                            mostrarDialogoBloqueo = true
+                        } else {
+                            errorMensaje = "Contraseña incorrecta. Intento $intentosFallidos de 3."
+                        }
                     } else {
+                        intentosFallidos = 0
                         errorMensaje = ""
                         playSuccessFeedback(context)
                         bienvenidaDialog = true
