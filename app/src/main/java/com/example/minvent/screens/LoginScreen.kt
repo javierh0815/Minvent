@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.minvent.data.DataUsers
 import com.example.minvent.utils.playSuccessFeedback
+import com.example.minvent.components.BotonPrincipal
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -63,7 +64,8 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
+            BotonPrincipal(
+                text = "Entrar",
                 onClick = {
                     val usuarioEncontrado = DataUsers.dummyData.find {
                         it.email.equals(email, ignoreCase = true)
@@ -88,29 +90,22 @@ fun LoginScreen(navController: NavController) {
                         playSuccessFeedback(context)
                         bienvenidaDialog = true
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Entrar")
-            }
+                }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { navController.navigate("register") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Ir a Registro")
-            }
+            BotonPrincipal(
+                text = "Ir a Registro",
+                onClick = { navController.navigate("register") }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { navController.navigate("recover") },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Recupera tu contraseña")
-            }
+            BotonPrincipal(
+                text = "Recupera tu contraseña",
+                onClick = { navController.navigate("recover") }
+            )
 
             if (errorMensaje.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
