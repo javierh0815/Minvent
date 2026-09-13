@@ -15,6 +15,7 @@ import com.example.minvent.data.DataUsers
 import com.example.minvent.util.playErrorFeedback
 import com.example.minvent.util.playSuccessFeedback
 import androidx.compose.ui.platform.LocalContext
+import com.example.minvent.util.ejecutarConValidacion
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,15 +63,20 @@ fun RecoverPassScreen(navController: NavController){
                         it.email.equals(email, ignoreCase = true)
                     }
 
-                    if (email.isBlank()) {
+                    ejecutarConValidacion(email.isBlank()) {
                         errorMensaje = "Ingresar correo electrónico"
                         successMensaje = ""
                         playErrorFeedback(context)
-                    } else if (!userEncontrado){
+                    }
+
+                    ejecutarConValidacion(email.isNotBlank() && !userEncontrado) {
                         errorMensaje = "No se encuentra al usuario"
                         successMensaje = ""
                         playErrorFeedback(context)
-                    } else {
+                    }
+
+
+                    ejecutarConValidacion(email.isNotBlank() && userEncontrado) {
                         errorMensaje = ""
                         successMensaje = "Se ha enviado un correo para recuperar contraseña"
                         playSuccessFeedback(context)

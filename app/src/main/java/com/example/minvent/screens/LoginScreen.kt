@@ -15,6 +15,7 @@ import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
 import com.example.minvent.components.TituloApp
 import com.example.minvent.components.TituloSeccion
+import com.example.minvent.util.ejecutarConValidacion
 import com.example.minvent.util.playErrorFeedback
 
 @Composable
@@ -65,13 +66,22 @@ fun LoginScreen(navController: NavController) {
                         it.email.equals(email, ignoreCase = true)
                     }
 
-                    if (email.isBlank() || password.isBlank()) {
+                    val camposVacios = email.isBlank() || password.isBlank()
+                    val usuarioNoExiste = !camposVacios && usuarioEncontrado == null
+                    val passwordIncorrecta = !camposVacios && usuarioEncontrado != null && usuarioEncontrado.password != password
+                    val loginExitoso = !camposVacios && usuarioEncontrado != null && usuarioEncontrado.password == password
+
+                    ejecutarConValidacion(camposVacios) {
                         errorMensaje = "Ingrese los campos para continuar"
                         playErrorFeedback(context)
-                    } else if (usuarioEncontrado == null) {
+                    }
+
+                    ejecutarConValidacion(usuarioNoExiste) {
                         errorMensaje = "El usuario no existe"
                         playErrorFeedback(context)
-                    } else if (usuarioEncontrado.password != password) {
+                    }
+
+                    ejecutarConValidacion(passwordIncorrecta) {
                         intentosFallidos++
                         playErrorFeedback(context)
 
@@ -81,7 +91,9 @@ fun LoginScreen(navController: NavController) {
                         } else {
                             errorMensaje = "Contraseña incorrecta. Intento $intentosFallidos de 3."
                         }
-                    } else {
+                    }
+
+                    ejecutarConValidacion(loginExitoso) {
                         intentosFallidos = 0
                         errorMensaje = ""
                         playSuccessFeedback(context)

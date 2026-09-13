@@ -18,6 +18,7 @@ import com.example.minvent.data.DataUsers
 import com.example.minvent.data.User
 import com.example.minvent.util.playErrorFeedback
 import com.example.minvent.util.playSuccessFeedback
+import com.example.minvent.util.ejecutarConValidacion
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,11 +73,14 @@ fun RegisterScreen(navController: NavController) {
                         it.email.equals(email, ignoreCase = true)
                     }
 
-                    if (userExiste) {
+
+                    ejecutarConValidacion(userExiste) {
                         errorMensaje = "Usuario ya existe en el sistema"
                         showPopup = false
                         playErrorFeedback(context)
-                    } else {
+                    }
+
+                    if (!userExiste) {
                         DataUsers.addUser(User(email = email, password = password))
 
                         errorMensaje = ""
