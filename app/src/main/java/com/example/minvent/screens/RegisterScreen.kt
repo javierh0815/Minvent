@@ -10,11 +10,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.minvent.components.BarraSuperiorApp
 import com.example.minvent.components.BotonPrincipal
+import com.example.minvent.components.BotonSecundario
 import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
 import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
 import com.example.minvent.data.User
+import com.example.minvent.util.playErrorFeedback
 import com.example.minvent.util.playSuccessFeedback
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,6 +75,7 @@ fun RegisterScreen(navController: NavController) {
                     if (userExiste) {
                         errorMensaje = "Usuario ya existe en el sistema"
                         showPopup = false
+                        playErrorFeedback(context)
                     } else {
                         DataUsers.addUser(User(email = email, password = password))
 
@@ -82,13 +85,24 @@ fun RegisterScreen(navController: NavController) {
                     }
                 }
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            BotonSecundario(
+                text = "Limpiar campos",
+                onClick = {
+                    email = ""
+                    password = ""
+                    errorMensaje = ""
+                }
+            )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             BotonPrincipal(
                 text = "Ir a Inicio de Sesión",
                 onClick = { navController.navigate("login") }
             )
-
 
             if (errorMensaje.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))

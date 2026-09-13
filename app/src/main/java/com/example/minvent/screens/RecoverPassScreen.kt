@@ -12,10 +12,14 @@ import com.example.minvent.components.BotonPrincipal
 import com.example.minvent.components.InputEmail
 import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
+import com.example.minvent.util.playErrorFeedback
+import com.example.minvent.util.playSuccessFeedback
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecoverPassScreen(navController: NavController){
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var errorMensaje by remember { mutableStateOf("") }
     var successMensaje by remember { mutableStateOf("") }
@@ -61,16 +65,18 @@ fun RecoverPassScreen(navController: NavController){
                     if (email.isBlank()) {
                         errorMensaje = "Ingresar correo electrónico"
                         successMensaje = ""
+                        playErrorFeedback(context)
                     } else if (!userEncontrado){
                         errorMensaje = "No se encuentra al usuario"
                         successMensaje = ""
+                        playErrorFeedback(context)
                     } else {
                         errorMensaje = ""
                         successMensaje = "Se ha enviado un correo para recuperar contraseña"
+                        playSuccessFeedback(context)
                     }
                 }
             )
-
             Spacer(modifier = Modifier.height(16.dp))
 
             BotonPrincipal(

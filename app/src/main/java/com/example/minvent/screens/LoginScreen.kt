@@ -15,6 +15,7 @@ import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
 import com.example.minvent.components.TituloApp
 import com.example.minvent.components.TituloSeccion
+import com.example.minvent.util.playErrorFeedback
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -66,10 +67,13 @@ fun LoginScreen(navController: NavController) {
 
                     if (email.isBlank() || password.isBlank()) {
                         errorMensaje = "Ingrese los campos para continuar"
+                        playErrorFeedback(context)
                     } else if (usuarioEncontrado == null) {
                         errorMensaje = "El usuario no existe"
+                        playErrorFeedback(context)
                     } else if (usuarioEncontrado.password != password) {
                         intentosFallidos++
+                        playErrorFeedback(context)
 
                         if (intentosFallidos >= 3) {
                             errorMensaje = "Acceso bloqueado temporalmente"
