@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import com.example.minvent.components.BarraSuperiorApp
 import com.example.minvent.components.BotonPrincipal
 import com.example.minvent.components.InputEmail
+import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,11 +42,7 @@ fun RecoverPassScreen(navController: NavController){
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Recuperar contraseña",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
+            TituloSeccion(text = "RECUPERAR CONTRASEÑA")
 
             InputEmail(
                 value = email,
@@ -54,7 +51,8 @@ fun RecoverPassScreen(navController: NavController){
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
+            BotonPrincipal(
+                text = "Enviar petición",
                 onClick = {
                     val userEncontrado = DataUsers.dummyData.any {
                         it.email.equals(email, ignoreCase = true)
@@ -70,11 +68,8 @@ fun RecoverPassScreen(navController: NavController){
                         errorMensaje = ""
                         successMensaje = "Se ha enviado un correo para recuperar contraseña"
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Enviar petición")
-            }
+                }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -13,6 +13,8 @@ import com.example.minvent.utils.playSuccessFeedback
 import com.example.minvent.components.BotonPrincipal
 import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
+import com.example.minvent.components.TituloApp
+import com.example.minvent.components.TituloSeccion
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -35,11 +37,11 @@ fun LoginScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "MINVENT",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
+            TituloApp()
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TituloSeccion(text = "INICIAR SESIÓN")
 
             InputEmail(
                 value = email,

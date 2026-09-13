@@ -63,11 +63,21 @@ fun BarraSuperiorApp(
 
 
 @Composable
-fun TituloApp(text: String) {
+fun TituloApp(text: String = "MINVENT") {
     Text(
         text = text,
         style = MaterialTheme.typography.headlineLarge,
         modifier = Modifier.padding(bottom = 32.dp)
+    )
+}
+
+
+@Composable
+fun TituloSeccion(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleMedium,
+        modifier = Modifier.padding(bottom = 16.dp)
     )
 }
 

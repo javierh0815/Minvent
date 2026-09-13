@@ -12,6 +12,7 @@ import com.example.minvent.components.BarraSuperiorApp
 import com.example.minvent.components.BotonPrincipal
 import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
+import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
 import com.example.minvent.utils.playSuccessFeedback
 
@@ -45,11 +46,7 @@ fun RegisterScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "REGISTRO",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 32.dp)
-            )
+            TituloSeccion(text = "REGISTRO")
 
             InputEmail(
                 value = email,
