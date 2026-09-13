@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.minvent.data.DataUsers
-import com.example.minvent.utils.playSuccessFeedback
+import com.example.minvent.util.playSuccessFeedback
 import com.example.minvent.components.BotonPrincipal
 import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword

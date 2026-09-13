@@ -15,7 +15,7 @@ import com.example.minvent.components.InputPassword
 import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
 import com.example.minvent.data.User
-import com.example.minvent.utils.playSuccessFeedback
+import com.example.minvent.util.playSuccessFeedback
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
