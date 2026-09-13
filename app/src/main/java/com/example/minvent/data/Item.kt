@@ -5,7 +5,6 @@ data class Item (
     val nombre: String,
     val autor: String,
     val tipo: String,
-    val comentario: String,
-    val cantidad: Int
+    val comentario: String
 
 )

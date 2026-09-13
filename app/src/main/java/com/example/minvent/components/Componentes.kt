@@ -172,7 +172,7 @@ fun InputPassword(
 }
 
 @Composable
-fun ItemCard(item: Item) {
+fun ItemCard(item: Item, cantidad: Int) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -238,7 +238,7 @@ fun ItemCard(item: Item) {
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "Cantidad: ${item.cantidad}",
+                    text = "Cantidad: $cantidad",
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold
                 )

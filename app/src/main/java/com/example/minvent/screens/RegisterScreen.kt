@@ -14,6 +14,7 @@ import com.example.minvent.components.InputEmail
 import com.example.minvent.components.InputPassword
 import com.example.minvent.components.TituloSeccion
 import com.example.minvent.data.DataUsers
+import com.example.minvent.data.User
 import com.example.minvent.utils.playSuccessFeedback
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,13 +74,14 @@ fun RegisterScreen(navController: NavController) {
                         errorMensaje = "Usuario ya existe en el sistema"
                         showPopup = false
                     } else {
+                        DataUsers.addUser(User(email = email, password = password))
+
                         errorMensaje = ""
                         playSuccessFeedback(context)
                         showPopup = true
                     }
                 }
             )
-
             Spacer(modifier = Modifier.height(16.dp))
 
             BotonPrincipal(

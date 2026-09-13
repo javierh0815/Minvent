@@ -15,6 +15,17 @@ import com.example.minvent.data.DataItems
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
+    val itemsAgrupados by remember {
+        derivedStateOf {
+            DataItems.dummyItem
+                .groupBy { it.cod }
+                .map { (_, listaDeCopias) ->
+                    Pair(listaDeCopias.first(), listaDeCopias.size)
+                }
+        }
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -43,8 +54,8 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(DataItems.dummyItem) { item ->
-                        ItemCard(item = item)
+                    items(itemsAgrupados) { (item, cantidad) ->
+                        ItemCard(item = item, cantidad = cantidad)
                     }
                 }
             }
