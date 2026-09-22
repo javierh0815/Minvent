@@ -19,6 +19,8 @@ import com.example.minvent.data.User
 import com.example.minvent.util.playErrorFeedback
 import com.example.minvent.util.playSuccessFeedback
 import com.example.minvent.util.ejecutarConValidacion
+import com.example.minvent.util.toCleanEmail
+import com.example.minvent.util.isNotBlankValid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,10 +71,20 @@ fun RegisterScreen(navController: NavController) {
             BotonPrincipal(
                 text = "Registrarse",
                 onClick = {
-                    val userExiste = DataUsers.dummyData.any {
-                        it.email.equals(email, ignoreCase = true)
+                    val emailLimpio = email.toCleanEmail()
+                    val passwordValida = password.isNotBlankValid()
+
+                    val camposVacios = emailLimpio.isBlank() || passwordValida == null
+
+                    val userExiste = !camposVacios && DataUsers.dummyData.any {
+                        it.email.toCleanEmail() == emailLimpio
                     }
 
+                    ejecutarConValidacion(camposVacios) {
+                        errorMensaje = "Complete todos los campos para registrarse"
+                        showPopup = false
+                        playErrorFeedback(context)
+                    }
 
                     ejecutarConValidacion(userExiste) {
                         errorMensaje = "Usuario ya existe en el sistema"
@@ -80,8 +92,8 @@ fun RegisterScreen(navController: NavController) {
                         playErrorFeedback(context)
                     }
 
-                    if (!userExiste) {
-                        DataUsers.addUser(User(email = email, password = password))
+                    if (!camposVacios && !userExiste) {
+                        DataUsers.addUser(User(email = emailLimpio, password = password))
 
                         errorMensaje = ""
                         playSuccessFeedback(context)

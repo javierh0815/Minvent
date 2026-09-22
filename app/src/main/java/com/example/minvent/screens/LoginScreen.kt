@@ -17,6 +17,7 @@ import com.example.minvent.components.TituloApp
 import com.example.minvent.components.TituloSeccion
 import com.example.minvent.util.ejecutarConValidacion
 import com.example.minvent.util.playErrorFeedback
+import com.example.minvent.util.toCleanEmail
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -62,11 +63,14 @@ fun LoginScreen(navController: NavController) {
             BotonPrincipal(
                 text = "Entrar",
                 onClick = {
+
+                    val emailLimpio = email.toCleanEmail()
+
                     val usuarioEncontrado = DataUsers.dummyData.find {
-                        it.email.equals(email, ignoreCase = true)
+                        it.email.toCleanEmail() == emailLimpio
                     }
 
-                    val camposVacios = email.isBlank() || password.isBlank()
+                    val camposVacios = emailLimpio.isBlank() || password.isBlank()
                     val usuarioNoExiste = !camposVacios && usuarioEncontrado == null
                     val passwordIncorrecta = !camposVacios && usuarioEncontrado != null && usuarioEncontrado.password != password
                     val loginExitoso = !camposVacios && usuarioEncontrado != null && usuarioEncontrado.password == password
@@ -101,7 +105,6 @@ fun LoginScreen(navController: NavController) {
                     }
                 }
             )
-
             Spacer(modifier = Modifier.height(16.dp))
 
             BotonPrincipal(
